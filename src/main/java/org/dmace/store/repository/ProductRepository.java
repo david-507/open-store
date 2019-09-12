@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Producto, Long> {
 
     @Query(value = "select * from  PRODUCTO order by rand() limit ?1", nativeQuery = true)
     List<Producto> findRandom(int max);
+
+    List<Producto> findAllByCategoria_Id(long catid);
 }
