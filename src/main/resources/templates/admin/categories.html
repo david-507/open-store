@@ -7,26 +7,7 @@
     <title>simple store</title>
     <link href="" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
     <style>
-        .section .row{
-            margin-top: 7%;
-            margin-bottom: 10%;
-        }
-        .section .row .col-md-6{
-            background: #f5f5f5;
-            margin-right: -2%;
-            padding: 5%;
-        }
-        .section h3{
-            color: #004085;
-        }
-        .section p{
-            margin-top: 10%;
-            color: #545b62;
-        }
-        .section img
-        {
-            width: 100%;
-        }
+
     </style>
 </head>
 <body>
@@ -55,37 +36,44 @@
             admin
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" >
-            <a class="dropdown-item" href="admin/list/categories" th:href="@{/admin/categories}">Categorías</a>
-            <a class="dropdown-item" href="admin/list/products" th:href="@{/admin/products}">Productos</a>
+            <a class="dropdown-item" href="categories" th:href="@{/admin/categories}">Categorías</a>
+            <a class="dropdown-item" href="products" th:href="@{/admin/products}">Productos</a>
         </div>
     </div>
     <a class="btn btn-outline-primary" href="#">Sign up</a>
 </div>
 <!--/* END HEADER */-->
 
-<div class="sub-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4"> <img src="" th:src="@{/img/lang-logo.png}" /> open - store</h1>
-    <p class="lead">Welcome to Open-store! An online simulated  computer store.</p>
-</div>
 
-<br/>
-<hr />
+
+<br />
+
 
 <main role="main">
-    <h3 class="text-bold text-center" th:text="${product.nombre}">nombre producto</h3>
-    <div class="container section">
+
+    <h3 class="text text-center text-dark">Category list</h3>
+
+    <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <h3 th:text="${product.descuento == 0} ? ${#numbers.formatDecimal(product.pvp, 1, 2)} + ' €' : ${#numbers.formatDecimal((product.pvp * (1 - product.descuento)), 1, 2) + ' €'}">
-                    precio
-                </h3>
-                <a href="" th:href="@{/product/buy}" class="btn btn-primary my-2">Comprar</a>
-                <p th:text="${product.descripcion}">
-                    Through its program, TopVolunteer™, GetLance partners with leading nonprofits and NGOs around the world who need high-skilled talent for their volunteer initiatives. Members of the GetLance network are encouraged to offer their skills and experience to these projects, whether to solve a timely problem or to contribute on an ongoing basis.
-                </p>
+            <div class="col col-md-4">
+                <p>imagen</p>
             </div>
-            <div class="col-md-6">
-                <img src="https://preview.ibb.co/erdq8p/Employee-1.jpg" alt="imagen producto" th:src="${product.imagen}" />
+            <div class="col col-md-4">
+                <p>nombre</p>
+            </div>
+            <div class="col col-md-4">
+                <p>destacado</p>
+            </div>
+        </div>
+        <div class="row" th:each="cat: ${categories}">
+            <div class="col col-md-4">
+                <p th:text="${cat.imagen}"></p>
+            </div>
+            <div class="col col-md-4">
+                <p th:text="${cat.nombre}"></p>
+            </div>
+            <div class="col col-md-4">
+                <p th:text="${cat.destacada}"></p>
             </div>
         </div>
     </div>

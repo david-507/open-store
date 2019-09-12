@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>simple store</title>
+    <link href="" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <style>
+
+    </style>
+</head>
+<body>
+
+<!--/* HEADER */-->
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a th:href="@{/}">Open store</a></h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark">Featured</a>
+        <a class="p-2 text-dark" href="#">Enterprise</a>
+        <a class="p-2 text-dark" href="#">Support</a>
+        <a class="p-2 text-dark" href="#">Pri5cing</a>
+    </nav>
+
+    <div class="dropdown" id="cat-button">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            categorias
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" >
+            <a class="dropdown-item" th:each="cat :${categories}" th:href="@{/(cid=${cat.id})}"  th:text="${cat.nombre}">Categoria 1</a>
+        </div>
+    </div>
+
+    <div class="dropdown" id="admin-button">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            admin
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" >
+            <a class="dropdown-item" href="categories" th:href="@{/admin/categories}">Categorías</a>
+            <a class="dropdown-item" href="products" th:href="@{/admin/products}">Productos</a>
+        </div>
+    </div>
+    <a class="btn btn-outline-primary" href="#">Sign up</a>
+</div>
+<!--/* END HEADER */-->
+
+
+
+<br />
+
+
+<main role="main">
+
+    <h3 class="text text-center text-dark">Products list</h3>
+
+    <div class="container">
+
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">imagen</th>
+                <th scope="col">nombre</th>
+                <th scope="col">pvp</th>
+                <th scope="col">descuento</th>
+                <th scope="col">acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:id="${prod.id}" th:each="prod : ${products}" onclick="openProductModal(this.id)" style="cursor: pointer;">
+                <th scope="row">
+                    <img src="#" th:src="${prod.imagen}" width="30px" height="30px" />
+                </th>
+                <td th:text="${prod.nombre}">nombre</td>
+                <td th:text="${#numbers.formatDecimal(prod.pvp, 1, 2) + ' €'}">precio</td>
+                <td th:text="${#numbers.formatPercent(prod.descuento, 1, 0)}">descuento</td>
+                <td>
+                    <div class="row nav-row">
+                        <a class="btn btn-danger" th:href="@{/}" onclick="$('#yes-no-modal').modal('show');">Borrar</a>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</main>
+
+
+<!--<div class="modal in" style="display: block;" id="yes-no-modal">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h4 class="modal-title">Are you sure???</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <p>Are you sure you want to delete (this)?</p>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-12-xs text-center">-->
+<!--                        <button class="btn btn-success btn-md">Yes</button>-->
+<!--                        <button class="btn btn-danger btn-md">No</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="modal fade bd-example-modal-lg" id="productmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editando producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">nombre:</label>
+                        <input type="text" class="form-control" id="name" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="image" class="col-form-label">imagen:</label>
+                        <input type="text" class="form-control" id="image" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="col-form-label">precio:</label>
+                        <input type="text" class="form-control" id="price" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="discount" class="col-form-label">descuento:</label>
+                        <input type="text" class="form-control" id="discount" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-form-label">descripción:</label>
+                        <textarea class="form-control" id="description" value=""></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>Open store was created with the newest version of &copy; Bootstrap, the most popular CSS Framework for developing responsive and mobile-first websites.</p>
+    </div>
+</footer>
+
+<script src="" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script src="" th:src="@{/js/popper.min.js}"></script>
+<script src="" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="" th:src="@{/js/holder.min.js}"></script>
+<script>
+
+    function openProductModal(pid) {
+        //$('#' + pid);
+        $('#productmodal').modal('show');
+    }
+
+    $(document).ready(function() {
+        $('#productmodal').on('show.bs.modal', function (event) {
+            //var elem = $(event.relatedTarget); // element that triggered the modal
+            //var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            // var modal = $(this);
+            // modal.find('.modal-title').text('New message to ' + recipient);
+            // modal.find('.modal-body input').val(recipient);
+        })
+    });
+</script>
+</body>
+
+</body>
+</html>

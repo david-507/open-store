@@ -192,8 +192,8 @@
             admin
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" >
-            <a class="dropdown-item" href="admin/list/categorias" th:href="@{/admin/categorias}">Categorías</a>
-            <a class="dropdown-item" href="admin/list/productos" th:href="@{/admin/productos}">Productos</a>
+            <a class="dropdown-item" href="admin/list/categories" th:href="@{/admin/categories}">Categorías</a>
+            <a class="dropdown-item" href="admin/list/products" th:href="@{/admin/products}">Productos</a>
         </div>
     </div>
     <a class="btn btn-outline-primary" href="#">Sign up</a>
@@ -231,9 +231,9 @@
                             <div class="meta card-text">
                             </div>
                             <div class="card-text">
-                                <p class="text-bold" th:text="${prod.descuento == 0} ? ${#numbers.formatCurrency(prod.pvp)} : ${#numbers.formatCurrency(prod.pvp * (1 - prod.descuento))}">precio</p>
+                                <p class="text-bold" th:text="${prod.descuento == 0} ? ${#numbers.formatDecimal(prod.pvp, 1, 2)} + ' €' : ${#numbers.formatDecimal((prod.pvp * (1 - prod.descuento)), 1, 2) + ' €'}">precio</p>
                                 <th:block th:if="${prod.descuento > 0}">
-                                    <span class="price-original" th:text="${#numbers.formatCurrency(prod.pvp)}"></span>
+                                    <span class="price-original" th:text="${#numbers.formatDecimal(prod.pvp, 1, 2)}"></span>
                                     <p class="label label-danger" th:text="${#numbers.formatPercent(prod.descuento,1,0)}"></p>
                                 </th:block>
                             </div>

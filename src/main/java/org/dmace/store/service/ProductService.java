@@ -20,11 +20,15 @@ public class ProductService {
 
     }
 
-    public List<Producto>  findAllByCategory(Long catid) {
+    public List<Producto> findAllByCategory(Long catid) {
         return repository.findAllByCategoria_Id(catid);
     }
 
     public Optional<Producto> findById(Long id) {
         return repository.findById(id);
+    }
+
+    public List<Producto> findAll() {
+        return repository.findAll();
     }
 }
