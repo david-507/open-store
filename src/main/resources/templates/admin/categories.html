@@ -7,7 +7,22 @@
     <title>simple store</title>
     <link href="" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
     <style>
+        .sbl-circ-path {
+            height: 35px;
+            width: 35px;
+            color: rgba(90, 90, 90, 0.2);
+            position: relative;
+            display: inline-block;
+            border: 5px solid;
+            border-radius: 50%;
+            border-right-color: #5a5a5a;
+            animation: rotate 1s linear infinite; }
 
+        @keyframes rotate {
+            0% {
+                transform: rotate(0); }
+            100% {
+                transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -55,6 +70,13 @@
 
     <div class="container">
 
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${param.error}">
+            La categoría no pudo ser borrada. Tiene <strong th:text="${param.error}">0</strong> productos asociados.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
         <table class="table table-hover table-sm">
             <thead class="thead-light">
             <tr>
@@ -67,7 +89,7 @@
             <tbody>
             <tr th:id="${cat.id}" th:each="cat : ${categories}">
                 <td scope="row">
-                    <img src="#" th:src="${cat.imagen == null} ? 'holder.js/64x64' : ${cat.imagen}" width="64px" height="64px" />
+                    <img src="#" th:src="${#strings.isEmpty(cat.imagen)} ? 'holder.js/64x64' : ${cat.imagen}" width="64px" height="64px" />
                 </td>
                 <td th:data-id="${cat.id}" th:text="${cat.nombre}" data-toggle="modal" data-target="#edit-modal" class="clickable">nombre</td>
                 <td th:text="${cat.destacada}">precio</td>
@@ -79,10 +101,34 @@
             </tr>
             </tbody>
         </table>
-
+        <a class="btn btn-primary" th:href="@{/admin/category/new}">Crear Nueva categoria</a>
     </div>
 
 </main>
+
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-modal-label">Borrar categoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <p id="delete-msg"></p>
+                </div>
+            </div>
+            <div class="modal-footer" id="delete-buttons">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a id="delete-button" type="button" class="btn btn-danger" data-id="" href="#">BORRAR</a>
+                <div id="loader" class="sbl-circ-path" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <footer class="text-muted">
@@ -98,7 +144,60 @@
 <script src="" th:src="@{/js/popper.min.js}"></script>
 <script src="" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script src="" th:src="@{/js/holder.min.js}"></script>
-</body>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        var deleteModal = $('#delete-modal');
+        deleteModal.on('show.bs.modal', function (event) {
+            var elem = $(event.relatedTarget); // element that triggered the modal
+            var tid = elem.data('id');
+            var modal = $(this);
 
+            var name = $('#' + tid + ' td:nth-child(2)').html();
+
+            modal.find('#delete-modal-label').text("Borrar '" + name + "' ?");
+            modal.find('#delete-button').data('id', tid);
+
+            //* we need to check if Category has products to alert the user *//
+            $('#loader').show();
+            $('#delete-buttons .btn').attr('disabled', true);
+            var totalProductsUrl = /*[[@{/admin/category/}]]*/ 'test';
+
+            var request = $.ajax({
+                url: totalProductsUrl + tid + '/products-count' ,
+                method: "GET",
+                contentType: 'application/json'
+            });
+
+            request.done(function( totalProducts ) {
+                if( totalProducts>0 ) {
+                    modal.find('#delete-modal-label').html("<strong>Alerta</strong>");
+                    $('#delete-msg').text(name + ' tiene ' + totalProducts + ' productos asociados y no puede ser borrada.');
+                } else {
+                    $('#delete-msg').text('Desea borrar la categoría ' + name + ' ?');
+                }
+                $('#loader').hide();
+            });
+
+            request.fail(function( jqXHR, textStatus  ) {
+                $('#delete-msg').text('El servidor no esta contestando. Intenta de nuevo en unos minutos.');
+                modal.find('#delete-modal-label').text(textStatus);
+                $('#loader').hide();
+            });
+
+        });
+
+        deleteModal.on('hidden.bs.modal', function (e) {
+            $('#delete-buttons .btn').attr('disabled', false);
+            $('#loader').hide();
+        });
+
+        $('#delete-button').on("click", function () {
+            var deleteUrl = /*[[@{/admin/category/delete/}]]*/ 'test';
+            var id = $(this).data('id');
+            $('#delete-button').attr('href', deleteUrl + id);
+        });
+
+    });
+</script>
 </body>
 </html>

@@ -43,7 +43,7 @@ public class Producto {
     private Categoria categoria;
 
     @OneToMany(mappedBy="producto", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
-    private Set<Puntuacion> puntuaciones = new HashSet<Puntuacion>();
+    private Set<Puntuacion> puntuaciones = new HashSet<>();
 
     public Producto() {
     }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -20,10 +21,17 @@ public class AdminProductController {
     @Autowired
     private ProductService productservice;
 
-    @GetMapping("/new")
-    public String categories(@ModelAttribute("product") Producto product, Model model) {
+    @GetMapping("/create")
+    public String showCreate(@ModelAttribute("product") Producto product, Model model) {
         model.addAttribute("categories", categoryService.findAll());
         return "/admin/product/new-product";
+    }
+
+    @PostMapping("/create")
+    public String doCreate(@ModelAttribute("product") Producto product, Model model) {
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("message", "Producto " + product.getNombre() + " creado!");
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/products")

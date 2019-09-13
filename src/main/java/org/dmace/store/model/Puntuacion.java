@@ -75,7 +75,7 @@ public class Puntuacion {
         if (o == null || getClass() != o.getClass()) return false;
         Puntuacion that = (Puntuacion) o;
         return puntuacion == that.puntuacion &&
-                id.equals(that.id) &&
+                Objects.equals(id, that.id) &&
                 Objects.equals(fecha, that.fecha) &&
                 Objects.equals(producto, that.producto);
     }

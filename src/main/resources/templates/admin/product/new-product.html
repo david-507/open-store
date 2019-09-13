@@ -41,7 +41,42 @@
 </div>
 <!--/* END HEADER */-->
 
+<div class="container">
 
+    <form id="create-product-form" th:action="@{/admin/products/create}" th:object="${product}" method="post" >
+        <div class="row justify-content-center">
+            <img id="product-img" src="" th:src="*{imagen}" alt="imagen producto" />
+        </div>
+        <div class="form-group">
+            <label for="name" class="col-form-label">nombre:</label>
+            <input type="text" class="form-control" id="name" th:field="*{nombre}" />
+        </div>
+        <div class="form-group">
+            <label for="image" class="col-form-label">imagen:</label>
+            <input type="text" class="form-control" id="image"  th:field="*{imagen}" />
+        </div>
+        <div class="form-group">
+            <label for="price" class="col-form-label">precio:</label>
+            <input type="text" class="form-control" id="price" th:field="*{pvp}"/>
+        </div>
+        <div class="form-group">
+            <label for="discount" class="col-form-label">descuento:</label>
+            <input type="text" class="form-control" id="discount" th:field="*{descuento}"/>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-form-label">descripción:</label>
+            <textarea class="form-control" id="description" rows="5" th:field="*{descripcion}"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="category" class="col-form-label">descuento:</label>
+            <select id="category" class="form-control" th:field="*{categoria}">
+                <option value="-1">-----</option>
+                <option th:each="categoria:${categories}" th:value="${categoria.id}" th:text="${categoria.nombre}"/>
+            </select>
+        </div>
+    </form>
+
+</div>
 
 </body>
 </html>
