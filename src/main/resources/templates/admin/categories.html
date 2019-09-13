@@ -54,28 +54,32 @@
     <h3 class="text text-center text-dark">Category list</h3>
 
     <div class="container">
-        <div class="row">
-            <div class="col col-md-4">
-                <p>imagen</p>
-            </div>
-            <div class="col col-md-4">
-                <p>nombre</p>
-            </div>
-            <div class="col col-md-4">
-                <p>destacado</p>
-            </div>
-        </div>
-        <div class="row" th:each="cat: ${categories}">
-            <div class="col col-md-4">
-                <p th:text="${cat.imagen}"></p>
-            </div>
-            <div class="col col-md-4">
-                <p th:text="${cat.nombre}"></p>
-            </div>
-            <div class="col col-md-4">
-                <p th:text="${cat.destacada}"></p>
-            </div>
-        </div>
+
+        <table class="table table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">imagen</th>
+                <th scope="col">nombre</th>
+                <th scope="col">destacada</th>
+                <th scope="col">acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:id="${cat.id}" th:each="cat : ${categories}">
+                <td scope="row">
+                    <img src="#" th:src="${cat.imagen == null} ? 'holder.js/64x64' : ${cat.imagen}" width="64px" height="64px" />
+                </td>
+                <td th:data-id="${cat.id}" th:text="${cat.nombre}" data-toggle="modal" data-target="#edit-modal" class="clickable">nombre</td>
+                <td th:text="${cat.destacada}">precio</td>
+                <td>
+                    <div class="row nav-row">
+                        <a class="btn btn-danger" th:href="@{/admin/category/delete/}" data-toggle="modal" data-target="#delete-modal" th:data-id="${cat.id}">Borrar</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 
 </main>

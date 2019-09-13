@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>simple store</title>
     <link href="" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="/icons/font/css/open-iconic.min.css" th:href="@{/icons/css/ionicons.min.css}" rel="stylesheet">
     <style>
         html {
             font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -26,15 +27,6 @@
             max-width: 700px;
             background-color: #318ac5;
         }
-
-        /*.card {*/
-        /*    min-width: 220px;*/
-        /*    !*height: 800px;*!*/
-        /*}*/
-
-        /*.card-body {*/
-        /*    height: 150px;*/
-        /*}*/
 
         footer {
             padding-top: 3rem;
@@ -164,6 +156,9 @@
             color: rgba(0, 0, 0, .4);
         }
 
+        .ion-md-heart-empty {
+            color: #000;
+        }
     </style>
 </head>
 <body>
@@ -213,7 +208,7 @@
 <hr />
 
 <main role="main">
-    <h3 class="text-bold text-center">Featured products</h3>
+    <h3 class="text-bold text-center">Featured products <i class="ion-md-heart"></i> <i class="ion-md-heart ion-md-heart-empty"></i></h3>
     <div class="album py-5 bg-light">
         <div class="container">
 
@@ -240,10 +235,12 @@
                         </div>
                         <div class="card-footer">
                             <!-- /* puntuación media */ -->
-                            <small><span th:text="${#numbers.formatDecimal(prod.getPuntuacionMedia(),1, 1)}">3 mins ago</span>/5</small>
+                            <small><span th:text="${#numbers.formatDecimal(prod.getPuntuacionMedia(),1,0)}"></span>/5</small>
                         </div>
-                        <div class="rating col-md-4">
-                            <span class="glyphicon glyphicon-star"></span>
+                        <div class="rating col-md-8">
+                            <span class="ion-md-heart" th:each="i :${#numbers.sequence(1, 5)}" th:classappend="${i>prod.getPuntuacionMedia()} ? 'ion-md-heart-empty'"></span>
+                            <span class="oi oi-reload"></span>
+                            <span class="oi oi-sun"></span>
                         </div>
                     </div>
                 </div>
