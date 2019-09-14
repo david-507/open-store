@@ -27,6 +27,12 @@
         {
             width: 100%;
         }
+
+        del {
+            text-decoration: line-through;
+            background-color: #fbb;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -76,8 +82,13 @@
     <div class="container section">
         <div class="row">
             <div class="col-md-6">
-                <h3 th:text="${product.descuento == 0} ? ${#numbers.formatDecimal(product.pvp, 1, 2)} + ' €' : ${#numbers.formatDecimal((product.pvp * (1 - product.descuento)), 1, 2) + ' €'}">
-                    precio
+                <!--/* <h3 th:text="${product.descuento == 0} ? ${#numbers.formatDecimal(product.pvp, 1, 2)} + ' €' : ${#numbers.formatDecimal((product.pvp * (1 - product.descuento)), 1, 2) + ' €'}"> */-->
+                <h3>
+                    <span th:text="${#numbers.formatDecimal(product.finalPrice(), 1, 2)} + &euro;"></span>
+                    <th:block th:if="${product.isDiscounted()}">
+                        <del th:if="${product.isDiscounted()}" th:text="${#numbers.formatDecimal(product.pvp, 1, 2)} + &euro;"></del>
+                        <span class="badge badge-danger" th:text="${#numbers.formatPercent(product.descuento,1,0)}" data-toggle="tooltip" data-placement="right" title="Oferta válida hasta fin de existencias!"></span>
+                    </th:block>
                 </h3>
                 <a href="" th:href="@{/product/buy}" class="btn btn-primary my-2 disabled">Comprar</a>
                 <p th:text="${product.descripcion}">
@@ -106,6 +117,11 @@
 <script src="" th:src="@{/js/popper.min.js}"></script>
 <script src="" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script src="" th:src="@{/js/holder.min.js}"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
 </body>
 
 </body>

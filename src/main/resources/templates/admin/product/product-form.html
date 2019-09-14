@@ -71,7 +71,7 @@
             <textarea class="form-control" id="description" rows="5" th:field="*{descripcion}"></textarea>
         </div>
         <div class="form-group">
-            <label for="category" class="col-form-label">descuento:</label>
+            <label for="category" class="col-form-label">categoría:</label>
             <select id="category" class="form-control" th:field="*{categoria}">
                 <option value="-1">-----</option>
                 <option th:each="categoria:${categories}" th:value="${categoria.id}" th:text="${categoria.nombre}"/>

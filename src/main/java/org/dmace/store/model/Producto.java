@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,9 +32,10 @@ public class Producto {
     private String descripcion;
 
     @Min(0)
-    private float pvp;
+    private double pvp;
 
-    private float descuento;
+    @Max(1)
+    private double descuento = 0;
 
     @URL
     private String imagen;
@@ -56,6 +58,38 @@ public class Producto {
         this.imagen = imagen;
         this.categoria = categoria;
     }
+
+    /* helper methods */
+    public boolean isDiscounted() {
+        return this.descuento > 0;
+    }
+
+    /** returns price according to current discount */
+    public double finalPrice() {
+        return (descuento==0) ? pvp : pvp * (1 - descuento);
+    }
+
+    public void addPuntuacion(Puntuacion puntuacion) {
+        this.puntuaciones.add(puntuacion);
+        puntuacion.setProducto(this);
+    }
+
+
+    public double getPuntuacionMedia() {
+        if (this.puntuaciones.isEmpty())
+            return 0;
+        else
+            return this.puntuaciones.stream()
+                    .mapToInt(Puntuacion::getPuntuacion)
+                    .average()
+                    .getAsDouble();
+    }
+
+    public double getNumeroTotalPuntuaciones() {
+        return this.puntuaciones.size();
+    }
+
+    /* end helper methods */
 
     public Long getId() {
         return id;
@@ -81,19 +115,19 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public float getPvp() {
+    public @Min(0) double getPvp() {
         return pvp;
     }
 
-    public void setPvp(float pvp) {
+    public void setPvp(@Min(0) double pvp) {
         this.pvp = pvp;
     }
 
-    public float getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(float descuento) {
+    public void setDescuento(double descuento) {
         this.descuento = descuento;
     }
 
@@ -122,29 +156,5 @@ public class Producto {
     public void setPuntuaciones(Set<Puntuacion> puntuaciones) {
         this.puntuaciones = puntuaciones;
     }
-
-    /**
-     * Métodos helper
-     */
-    public void addPuntuacion(Puntuacion puntuacion) {
-        this.puntuaciones.add(puntuacion);
-        puntuacion.setProducto(this);
-    }
-
-
-    public double getPuntuacionMedia() {
-        if (this.puntuaciones.isEmpty())
-            return 0;
-        else
-            return this.puntuaciones.stream()
-                    .mapToInt(Puntuacion::getPuntuacion)
-                    .average()
-                    .getAsDouble();
-    }
-
-    public double getNumeroTotalPuntuaciones() {
-        return this.puntuaciones.size();
-    }
-
 
 }

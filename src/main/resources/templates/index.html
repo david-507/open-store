@@ -159,6 +159,11 @@
         .ion-md-heart-empty {
             color: #000;
         }
+        del {
+            text-decoration: line-through;
+            background-color: #fbb;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -208,7 +213,7 @@
 <hr />
 
 <main role="main">
-    <h3 class="text-bold text-center">Featured products <i class="ion-md-heart"></i> <i class="ion-md-heart ion-md-heart-empty"></i></h3>
+    <h3 class="text-bold text-center"><del>Featured</del> products <i class="ion-md-heart"></i> <i class="ion-md-heart ion-md-heart-empty"></i></h3>
     <div class="album py-5 bg-light">
         <div class="container">
 
@@ -226,15 +231,15 @@
                             <div class="meta card-text">
                             </div>
                             <div class="card-text">
-                                <p class="text-bold" th:text="${prod.descuento == 0} ? ${#numbers.formatDecimal(prod.pvp, 1, 2)} + ' €' : ${#numbers.formatDecimal((prod.pvp * (1 - prod.descuento)), 1, 2) + ' €'}">precio</p>
-                                <th:block th:if="${prod.descuento > 0}">
-                                    <span class="price-original" th:text="${#numbers.formatDecimal(prod.pvp, 1, 2)}"></span>
-                                    <p class="label label-danger" th:text="${#numbers.formatPercent(prod.descuento,1,0)}"></p>
+                                <span class="text-bold" th:text="${#numbers.formatDecimal(prod.finalPrice(), 1, 2) + ' &euro;'}">precio</span>
+                                <th:block th:if="${prod.isDiscounted()}">
+                                    <del class="price-original" th:text="${#numbers.formatDecimal(prod.pvp, 1, 2) + ' &euro;'}"></del>
+                                    <span class="badge badge-danger" th:text="${#numbers.formatPercent(prod.descuento,1,0)}"></span>
                                 </th:block>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <!-- /* puntuación media */ -->
+                            <!--/* puntuación media */-->
                             <small><span th:text="${#numbers.formatDecimal(prod.getPuntuacionMedia(),1,0)}"></span>/5</small>
                         </div>
                         <div class="rating col-md-8">
