@@ -6,10 +6,9 @@ import org.dmace.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/product")
@@ -24,13 +23,25 @@ public class AdminProductController {
     @GetMapping("/create")
     public String showCreate(@ModelAttribute("product") Producto product, Model model) {
         model.addAttribute("categories", categoryService.findAll());
-        return "/admin/product/new-product";
+        return "/admin/product/product-form";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id")Long id, Model model) {
+        Optional<Producto> p = productservice.findById(id);
+
+        if(p.isPresent()) {
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("product", p.get());
+            return "/admin/product/product-form";
+        }
+
+        return "redirect:/admin/products";
     }
 
     @PostMapping("/create")
     public String doCreate(@ModelAttribute("product") Producto product, Model model) {
-        model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("message", "Producto " + product.getNombre() + " creado!");
+        productservice.save(product);
         return "redirect:/admin/products";
     }
 

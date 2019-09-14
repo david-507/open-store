@@ -79,13 +79,13 @@
                 <h3 th:text="${product.descuento == 0} ? ${#numbers.formatDecimal(product.pvp, 1, 2)} + ' €' : ${#numbers.formatDecimal((product.pvp * (1 - product.descuento)), 1, 2) + ' €'}">
                     precio
                 </h3>
-                <a href="" th:href="@{/product/buy}" class="btn btn-primary my-2">Comprar</a>
+                <a href="" th:href="@{/product/buy}" class="btn btn-primary my-2 disabled">Comprar</a>
                 <p th:text="${product.descripcion}">
                     Through its program, TopVolunteer™, GetLance partners with leading nonprofits and NGOs around the world who need high-skilled talent for their volunteer initiatives. Members of the GetLance network are encouraged to offer their skills and experience to these projects, whether to solve a timely problem or to contribute on an ongoing basis.
                 </p>
             </div>
             <div class="col-md-6">
-                <img src="https://preview.ibb.co/erdq8p/Employee-1.jpg" alt="imagen producto" th:src="${product.imagen}" />
+                <img src="https://preview.ibb.co/erdq8p/Employee-1.jpg" alt="imagen producto" th:src="${product.imagen}" style="border: 1px solid #cbd3af"/>
             </div>
         </div>
     </div>

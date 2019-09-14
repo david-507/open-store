@@ -89,9 +89,11 @@
             <tbody>
             <tr th:id="${cat.id}" th:each="cat : ${categories}">
                 <td scope="row">
-                    <img src="#" th:src="${#strings.isEmpty(cat.imagen)} ? 'holder.js/64x64' : ${cat.imagen}" width="64px" height="64px" />
+                    <a th:href="@{/admin/category/edit/{id}(id=${cat.id})}">
+                        <img src="#" th:src="${#strings.isEmpty(cat.imagen)} ? 'holder.js/64x64' : ${cat.imagen}" width="64px" height="64px" />
+                    </a>
                 </td>
-                <td th:data-id="${cat.id}" th:text="${cat.nombre}" data-toggle="modal" data-target="#edit-modal" class="clickable">nombre</td>
+                <td th:data-id="${cat.id}"><a th:href="@{/admin/category/edit/{id}(id=${cat.id})}" th:text="${cat.nombre}">nombre</a></td>
                 <td th:text="${cat.destacada}">precio</td>
                 <td>
                     <div class="row nav-row">

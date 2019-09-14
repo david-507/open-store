@@ -25,7 +25,18 @@ public class AdminCategoryController {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("category", new Categoria());
 
-        return "/admin/category/new-category";
+        return "/admin/category/category-form";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model) {
+        Optional<Categoria> c = categoryService.findById(id);
+        if(c.isPresent()) {
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("category", c.get());
+            return "/admin/category/category-form";
+        }
+        return "redirect:/admin/categories";
     }
 
     @GetMapping("/delete/{id}")

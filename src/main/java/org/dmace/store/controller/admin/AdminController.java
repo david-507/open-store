@@ -41,15 +41,10 @@ public class AdminController {
         return "admin/products";
     }
 
+    /** Deletes multiple products! */
     @DeleteMapping("/products")
     public ResponseEntity delete(@RequestBody List<Long> ids){
-        logger.info("Deleting products " + ids);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        // productService.delete(ids);
+        productservice.removeAll(ids);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

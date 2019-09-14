@@ -5,6 +5,7 @@ import org.dmace.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +31,14 @@ public class ProductService {
 
     public List<Producto> findAll() {
         return repository.findAll();
+    }
+
+    public Producto save(Producto product) {
+        return repository.save(product);
+    }
+
+    @Transactional
+    public void removeAll(List<Long> ids) {
+        repository.removeAllByIdIn(ids);
     }
 }

@@ -12,4 +12,8 @@ public interface ProductRepository extends JpaRepository<Producto, Long> {
     List<Producto> findRandom(int max);
 
     List<Producto> findAllByCategoria_Id(long catid);
+
+    List<Producto> findAllByIdIsIn(List<Long> ids);
+
+    void removeAllByIdIn(List<Long> ids);
 }

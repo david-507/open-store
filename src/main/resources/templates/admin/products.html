@@ -74,8 +74,9 @@
 <main role="main">
 
     <h3 class="text text-center text-dark">Products list</h3>
-    <a class="btn btn-primary" th:href="@{/admin/product/create}">Crear Nueva categoria</a>
+
     <div class="container">
+        <a class="btn btn-primary" th:href="@{/admin/product/create}">Crear Nuevo producto</a>
         <div id="product-deleted-msg" class="alert alert-success" role="alert" style="display: none;">
             Product deleted!
         </div>
@@ -92,7 +93,10 @@
             <tbody>
             <tr th:id="${prod.id}" th:each="prod : ${products}">
                 <td scope="row">
-                    <img src="#" th:src="${prod.imagen}" width="30px" height="30px" />
+                    <!--/* send to /admin/product/edit to show the diference */-->
+                    <a th:href="@{/admin/product/edit/{id}(id=${prod.id})}">
+                        <img src="#" th:src="${prod.imagen}" width="30px" height="30px" />
+                    </a>
                 </td>
                 <td th:data-id="${prod.id}" th:text="${prod.nombre}" data-toggle="modal" data-target="#edit-modal" class="clickable">nombre</td>
                 <td th:text="${#numbers.formatDecimal(prod.pvp, 1, 2) + ' €'}">precio</td>
