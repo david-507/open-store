@@ -174,8 +174,82 @@
         </a>
         <hr />
         <p>
-           Nuevo en Open-store? <a href="#">Regístrate ahora</a>
+           Nuevo en Open-store? <a th:href="@{/signup}" href="/register">Regístrate ahora</a>
         </p>
-    </div><!-- /card-container -->
-</div><!-- /container -->
+    </div>
+</div>
+
+
+
+<div class="container register" th:fragment="register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h3>Enhorabuena</h3>
+            <p>Estas a un paso de acceder a miles de productos!</p>
+<!--            <input type="submit" name="" value="Login"/><br/>-->
+            <a class="btn btn-primary" th:href="@{/login}">Iniciar sessión</a><br/>
+        </div>
+        <div class="col-md-9 register-right">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjYiIGhlaWdodD0iMjYiCnZpZXdCb3g9IjAgMCAyNiAyNiIKc3R5bGU9IiBmaWxsOiMwMDAwMDA7Ij48cGF0aCBkPSJNIDIwLjMxMjUgMC4wMzEyNSBDIDIwLjAzOTA2MyAwLjA0Njg3NSAxOS43NDYwOTQgMC4xNTIzNDQgMTkuNDY4NzUgMC4zNzUgQyAxOC4yOTY4NzUgMS4zMTY0MDYgMTguNDcyNjU2IDEuODA0Njg4IDE3LjkwNjI1IDIuOTM3NSBDIDE3LjcxNDg0NCAzLjU5NzY1NiAxNy4zOTg0MzggMy42NDQ1MzEgMTcuMTI1IDMuMDYyNSBDIDE2Ljc5Njg3NSAyLjQ4NDM3NSAxNi42MzY3MTkgMS43NTM5MDYgMTYuMTI1IDEuMzEyNSBDIDE1LjMwNDY4OCAwLjYwNTQ2OSAxNC4zNzUgMS4xMzY3MTkgMTQuODc1IDEuOTM3NSBDIDE1LjM3NSAyLjczODI4MSAxNS41ODU5MzggMy41ODU5MzggMTUuNzgxMjUgNC45MDYyNSBDIDE2LjA3MDMxMyA2Ljg3NSAxNS4yNDYwOTQgOS4wNzgxMjUgMTQuMTU2MjUgMTAuMTI1IEMgMTIuMTgzNTk0IDYuMDkzNzUgOS42MjUgMy4xMDkzNzUgNy44MTI1IDIuMTg3NSBDIDcuMjY1NjI1IDEuOTEwMTU2IDcuMDkzNzUgMi4xMDkzNzUgNy4wOTM3NSAyLjM3NSBDIDcuNDM3NSA2LjMyMDMxMyA3LjU2MjUgOS4wNDY4NzUgNy4zNDM3NSAxMS4wNjI1IEMgNy4yNDYwOTQgMTEuOTY0ODQ0IDUuMTA5Mzc1IDE1LjMxNjQwNiA1LjIxODc1IDE2LjA5Mzc1IEMgNS4zMjgxMjUgMTYuODcxMDk0IDUuOTUzMTI1IDE4LjA2MjUgNi4zNzUgMTguNjg3NSBDIDYuMjAzMTI1IDE4LjU2MjUgNS43Njk1MzEgMTguODUxNTYzIDUuODc1IDE5LjI1IEMgNS4xMTMyODEgMTkuNjc1NzgxIDUuMTg3NSAyMC4zNTkzNzUgNS45Njg3NSAyMC41MzEyNSBDIDYuMTcxODc1IDIxLjA1NDY4OCA2LjIxODc1IDIxLjI4OTA2MyA2Ljc4MTI1IDIxLjUzMTI1IEMgNi42NzE4NzUgMjIuNjQwNjI1IDYuNTU0Njg4IDIzLjc5Mjk2OSA2LjQzNzUgMjUuMDMxMjUgQyA2Ljk0NTMxMyAyNy41MjM0MzggMTAuNzg5MDYzIDIzLjIwNzAzMSAxMS4yODEyNSAyMi44NDM3NSBDIDEzLjk1MzEyNSAyMC44ODI4MTMgMTQuMzc4OTA2IDI1LjE0NDUzMSAxNi4yNSAyNS44MTI1IEMgMTkuMzk4NDM4IDI2LjkzNzUgMTguMzc1IDIwLjM0Mzc1IDE1Ljg0Mzc1IDEzLjg0Mzc1IEMgMTUuNTQyOTY5IDkuNjY3OTY5IDE2Ljk1NzAzMSA4LjQ1MzEyNSAxOC4zMTI1IDcuOTA2MjUgQyAxOS4wMjczNDQgNy42NzE4NzUgMTkuNTYyNSA3LjY1NjI1IDIwLjUzMTI1IDcuOTM3NSBDIDIyLjE5NTMxMyA4LjQxNDA2MyAyMi41NDY4NzUgNi41MTU2MjUgMjEuMDYyNSA2LjI4MTI1IEMgMjAuNSA2LjE5MTQwNiAyMC4wODIwMzEgNi4xOTkyMTkgMTkuNTYyNSA1Ljk2ODc1IEMgMTkuNzczNDM4IDUuMTM2NzE5IDIwLjYxMzI4MSA1LjA1NDY4OCAyMS40Mzc1IDQuOTM3NSBDIDIzLjMxMjUgNC42NzE4NzUgMjMuMTQ4NDM4IDIuNjcxODc1IDIxLjA2MjUgMy4xNTYyNSBDIDIwLjE1MjM0NCAzLjM2NzE4OCAxOS43MDcwMzEgMy45MTQwNjMgMTkuMzc1IDMuOTA2MjUgQyAxOS44MDA3ODEgMy4xMzI4MTMgMjAuNTIzNDM4IDIuNDU3MDMxIDIxLjIxODc1IDEuNDY4NzUgQyAyMS43NDIxODggMC43MjY1NjMgMjEuMTI4OTA2IC0wLjAxNTYyNSAyMC4zMTI1IDAuMDMxMjUgWiBNIDEwLjU5Mzc1IDcuMzQzNzUgQyAxMC44Mzk4NDQgNy4zMTI1IDExLjA4NTkzOCA3LjMzMjAzMSAxMS4zMTI1IDcuNDA2MjUgQyAxMi4yMTA5MzggNy43MTA5MzggMTIuNDg4MjgxIDguODMyMDMxIDExLjkzNzUgOS45MDYyNSBDIDExLjM4NjcxOSAxMC45ODA0NjkgMTAuMjEwOTM4IDExLjU4NTkzOCA5LjMxMjUgMTEuMjgxMjUgQyA4LjQxNDA2MyAxMC45NzY1NjMgOC4xMzY3MTkgOS44ODY3MTkgOC42ODc1IDguODEyNSBDIDkuMTAxNTYzIDguMDA3ODEzIDkuODU5Mzc1IDcuNDQxNDA2IDEwLjU5Mzc1IDcuMzQzNzUgWiBNIDkuNjU2MjUgOC44MTI1IEMgOS41MTk1MzEgOC44MTY0MDYgOS4zNzg5MDYgOC44OTQ1MzEgOS4yNSA5LjAzMTI1IEMgOC45OTYwOTQgOS4zMDg1OTQgOC45MDYyNSA5LjczNDM3NSA5LjA2MjUgMTAgQyA5LjIyMjY1NiAxMC4yNjU2MjUgOS41NTQ2ODggMTAuMjQ2MDk0IDkuODEyNSA5Ljk2ODc1IEMgMTAuMDcwMzEzIDkuNjkxNDA2IDEwLjE2MDE1NiA5LjI2NTYyNSAxMCA5IEMgOS45MjE4NzUgOC44NjcxODggOS43OTI5NjkgOC44MDg1OTQgOS42NTYyNSA4LjgxMjUgWiBNIDEyLjkzNzUgMTEuMzc1IEMgMTQuNDQxNDA2IDE0LjI0NjA5NCAxNS45MDIzNDQgMTcuNjI1IDE2LjE4NzUgMjEuNSBDIDE2LjMyNDIxOSAyMy4zNDc2NTYgMTQuODM1OTM4IDIxLjM1MTU2MyAxNC42NTYyNSAyMS4wMzEyNSBDIDExLjYwNTQ2OSAxNS41MzUxNTYgNy42NjQwNjMgMjYuODIwMzEzIDguNDM3NSAxOS43NSBDIDguODM5ODQ0IDE2LjgzOTg0NCA5LjAzNTE1NiAxNi40NjA5MzggOS4xMjUgMTMuMDYyNSBDIDkuMTI1IDEzLjA2MjUgMTEuNDQ1MzEzIDE0LjMwNDY4OCAxMi45Mzc1IDExLjM3NSBaIE0gNy40MDYyNSAxNC43MTg3NSBDIDcuMzMyMDMxIDE1LjY3OTY4OCA3LjMxMjUgMTYuMzI0MjE5IDcuMjE4NzUgMTcuMzEyNSBDIDcuMDExNzE5IDE2Ljc3MzQzOCA2LjczODI4MSAxNi43MTQ4NDQgNi41OTM3NSAxNi4yMTg3NSBDIDYuODk0NTMxIDE1Ljg5MDYyNSA3LjEwMTU2MyAxNS4yNSA3LjQwNjI1IDE0LjcxODc1IFoiPjwvcGF0aD48L3N2Zz4=" />
+                        <span id="welcomeMsg">Bienvenid@</span> !
+                    </h3>
+                    <form th:action="@{/signup}" method="post" th:object="${rb}">
+                    <div class="row register-form">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="sr-only">descripción:</label>
+                                    <input type="text" class="form-control" placeholder="Nombre *" id="name" th:field="*{name}" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" />
+                                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">Errores</div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Telefono *" id="phone" minlength="9" maxlength="12"  th:field="*{phone}" th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" />
+                                    <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="invalid-feedback">Errores</div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password *" id="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" />
+                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback">Errores</div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="maxl">
+                                        <label class="radio inline" th:each="g: ${genders}">
+                                            <input type="radio" th:field="*{gender}" th:value="${g.value}"/>
+                                            <span th:text="${g.label}"> Male </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" id="email" class="form-control" minlength="8" maxlength="128" placeholder="Correo electrónico *" th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
+                                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback">Errores</div>
+                                </div>
+                                <div class="form-group">
+                                    <select id="ciudad" class="form-control" th:field="*{city}" th:classappend="${#fields.hasErrors('city')} ? 'is-invalid'">
+                                        <option class="hidden" value="-">Porfavor, selecciona tu ciudad</option>
+                                        <option th:each="c: ${cities}" th:value="${c}" th:text="${c}">Barcelona</option>
+                                    </select>
+                                    <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="invalid-feedback">Errores</div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="passwordRepeat" class="form-control" placeholder="Confirmar Contraseña *" th:field="*{passwordRepeat}" th:classappend="${#fields.hasErrors('passwordRepeat')} ? 'is-invalid'"/>
+                                    <div th:if="${#fields.hasErrors('passwordRepeat')}" th:errors="*{passwordRepeat}" class="invalid-feedback">Errores</div>
+                                </div>
+                                <input type="submit" class="btnRegister"  value="Registrarse" />
+                            </div>
+
+                    </div> <!--/* END regiger-form */-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 </html>

@@ -1,8 +1,13 @@
 package org.dmace.store.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,9 +30,16 @@ public class User {
 
     private String password;
 
-    @CreatedDate
-    private Date created;
+    private boolean enabled = true;
 
+    @ManyToMany
+    private List<Role> roles = new ArrayList<>();
+
+    @CreationTimestamp
+    private Timestamp created;
+
+    @UpdateTimestamp
+    private Timestamp updated;
 
     public User() {
 
@@ -39,6 +51,23 @@ public class User {
         this.city = city;
         this.password = password;
     }
+
+    /* helpers */
+    public boolean isInRole(String rolename) {
+        return roles.contains(rolename);
+    }
+
+    public void addRole(String rolename) {
+        roles.add(new Role(rolename));
+    }
+
+    public void addRole(Role role) {
+        Assert.notNull(role, "role");
+        roles.add(role);
+    }
+
+
+    /* getters */
 
     public long getId() {
         return id;
@@ -64,6 +93,29 @@ public class User {
         return password;
     }
 
+    public Timestamp getUpdated() {
+        return updated;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setUpdated(Timestamp updated) {
+        this.updated = updated;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -77,7 +129,7 @@ public class User {
         this.city = city;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 

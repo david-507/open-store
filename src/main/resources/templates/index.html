@@ -172,7 +172,7 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal"><a th:href="@{/}">Open store</a></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark">Featured</a>
+        <a class="p-2 text-dark" th:href="@{/signup}">Iniciar sessión</a>
         <a class="p-2 text-dark" href="#">Enterprise</a>
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pri5cing</a>
@@ -196,7 +196,7 @@
             <a class="dropdown-item" href="admin/list/products" th:href="@{/admin/products}">Productos</a>
         </div>
     </div>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    <a class="btn btn-outline-primary" th:href="@{/signup}">Regístrate</a>
 </div>
 <!--/* END HEADER */-->
 

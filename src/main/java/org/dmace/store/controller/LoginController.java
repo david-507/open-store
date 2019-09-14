@@ -41,11 +41,13 @@ public class LoginController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("userLogin", new LoginBean());
+        model.addAttribute("fragment", "login");
         return "main-login";
     }
 
     @PostMapping("/login")
     public String doLogin(@Valid @ModelAttribute("userLogin") LoginBean lb, BindingResult br, Model model) {
+        model.addAttribute("fragment", "login");
 //        String result = getAction();
         String result = "redirect:/";
 
@@ -59,7 +61,6 @@ public class LoginController {
         if( loginSuccess(lb, user) ) {
             session.setAttribute("user", user);
         } else {
-//            model.addAttribute("userLogin", lb);
             model.addAttribute("error", "Nombre o contraseña incorrecto");
             return "main-login";
         }
