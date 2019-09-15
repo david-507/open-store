@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="596949661097-14ml9fda8ffnpcs7t05bisgpl5hj8lfd.apps.googleusercontent.com">
     <title>simple store</title>
     <link href="" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
     <link href="" th:href="@{/css/login.css}" rel="stylesheet" th:if="${#strings.equals(fragment, 'login')}" />
@@ -24,6 +25,7 @@
 
 
 <script src="" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 <script>
 
     $( document ).ready(function() {
@@ -39,8 +41,47 @@
         });
         //testLocalStorageData();
         // Load profile if it exits
-        loadProfile();
+        //loadProfile();
     });
+
+    function onLoad() {
+        gapi.load('auth2', function() {
+            gapi.auth2.init();
+        });
+    }
+
+    function googleSignOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            if( !($('#remember-me').is(":checked")) ) {
+                removeProfile();
+            }
+
+            console.log('User signed out.');
+            $("#username").show();
+            $("#password").show();
+            $("#remember").show();
+            $("#signin-btn").show();
+            $("#forgot").show();
+        });
+    }
+
+    function onSignIn(googleUser) {
+        // https://developers.google.com/identity/sign-in/web/backend-auth
+        var id_token = googleUser.getAuthResponse().id_token;
+        var profile = googleUser.getBasicProfile();
+
+        if( storeLocalProfile(profile.getImageUrl(), profile.getName(), profile.getEmail()) ) {
+            $("#profile-img").attr("src",profile.getImageUrl());
+            $("#profile-name").html(profile.getName());
+            $("#reauth-email").html(profile.getEmail());
+            $("#username").hide();
+            $("#password").hide();
+            $("#remember").hide();
+            $("#signin-btn").hide();
+            $("#forgot").hide();
+        }
+    }
 
     /**
      * Main function that load the profile if exists
@@ -58,6 +99,12 @@
             $("#inputEmail").hide();
             $("#remember").hide();
         });
+    }
+
+    /** removes user profile from localStorage if exists */
+    function removeProfile() {
+        if(!supportsHTML5Storage()) { return false; }
+        localStorage.clear();
     }
 
     /**
@@ -80,6 +127,14 @@
         }
     }
 
+    function storeLocalProfile(img, name, email){
+        if(!supportsHTML5Storage()) { return false; }
+        localStorage.setItem("PROFILE_IMG_SRC", img );
+        localStorage.setItem("PROFILE_NAME", name);
+        localStorage.setItem("PROFILE_REAUTH_EMAIL", email);
+        return true;
+    }
+
     /**
      * function that checks if the browser supports HTML5
      * local storage
@@ -93,24 +148,6 @@
             return false;
         }
     }
-
-    /**
-     * Test data. This data will be safe by the web app
-     * in the first successful login of a auth user.
-     * To Test the scripts, delete the localstorage data
-     * and comment this call.
-     *
-     * @returns {boolean}
-     */
-    function testLocalStorageData() {
-        if(!supportsHTML5Storage()) { return false; }
-        localStorage.setItem("PROFILE_IMG_SRC", "//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" );
-        localStorage.setItem("PROFILE_NAME", "César Izquierdo Tello");
-        localStorage.setItem("PROFILE_REAUTH_EMAIL", "oneaccount@gmail.com");
-    }
-
-
-
 </script>
 
 </body>

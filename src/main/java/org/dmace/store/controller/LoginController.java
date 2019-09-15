@@ -38,6 +38,12 @@ public class LoginController {
     @Autowired
     private HttpServletRequest request;
 
+    @GetMapping("/google-login")
+    public String googlelogin(Model model) {
+        model.addAttribute("userLogin", new LoginBean());
+        return "google-login";
+    }
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("userLogin", new LoginBean());
