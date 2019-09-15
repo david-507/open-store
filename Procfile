@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/open-store.war --port $PORT
+web: java $JAVA_OPTS -jar target/*.war -Dserver.port=$PORT
