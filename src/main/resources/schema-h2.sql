@@ -1,9 +1,9 @@
-drop table categoria if exists;
-drop table producto if exists;
-drop table puntuacion if exists;
+drop table if exists categoria;
+drop table if exists producto;
+drop table if exists puntuacion;
 drop table if exists role;
-drop table if exists users;
-drop table if exists users_role;
+drop table if exists app_user;
+drop table if exists user_role;
 drop sequence if exists hibernate_sequence;
 
 create sequence hibernate_sequence start with 100 increment by 1;
@@ -41,7 +41,7 @@ create table role (
     primary key (id)
 );
 
-create table user (
+create table app_user (
     id bigint not null,
     city varchar(255),
     created datetime,
@@ -63,4 +63,4 @@ alter table producto add constraint fk_producto_categoria foreign key (categoria
 alter table puntuacion add constraint fk_puntuacion_producto foreign key (producto_id) references producto;
 alter table role add constraint uk_role_name unique (name);
 alter table user_role add constraint fk_user_role_role foreign key (roles_id) references role (id);
-alter table user_role add constraint fk_user_role_user foreign key (users_id) references user (id);
+alter table user_role add constraint fk_user_role_user foreign key (users_id) references app_user (id);

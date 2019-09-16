@@ -71,6 +71,10 @@
         var id_token = googleUser.getAuthResponse().id_token;
         var profile = googleUser.getBasicProfile();
 
+        console.log("id token:" + id_token);
+        console.log("access token:" + access_token);
+        console.log("auth:" + googleUser.getAuthResponse());
+
         if( storeLocalProfile(profile.getImageUrl(), profile.getName(), profile.getEmail()) ) {
             $("#profile-img").attr("src",profile.getImageUrl());
             $("#profile-name").html(profile.getName());

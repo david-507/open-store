@@ -16,9 +16,7 @@ public class ProductService {
     private ProductRepository repository;
 
     public List<Producto> getRandomProducts(int max) {
-
         return repository.findRandom(max);
-
     }
 
     public List<Producto> findAllByCategory(Long catid) {

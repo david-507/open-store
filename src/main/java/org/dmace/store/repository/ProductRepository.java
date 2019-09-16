@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Producto, Long> {
 
-    @Query(value = "select * from  PRODUCTO order by rand() limit ?1", nativeQuery = true)
+    @Query(value = "select * from  PRODUCTO order by random() limit ?1", nativeQuery = true)
     List<Producto> findRandom(int max);
+
+    @Query("select p from Producto p order by random")
+    List<Producto> findRandomProducts();
 
     List<Producto> findAllByCategoria_Id(long catid);
 

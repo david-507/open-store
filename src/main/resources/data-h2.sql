@@ -34,5 +34,5 @@ INSERT INTO PRODUCTO (ID, NOMBRE, DESCRIPCION, PVP, DESCUENTO, IMAGEN, CATEGORIA
 INSERT INTO role (id, name) VALUES (50, 'ROLE_ADMIN');
 INSERT INTO role (id, name) VALUES (51, 'ROLE_USER');
 INSERT INTO role (id, name) VALUES (52, 'ROLE_OTHERS');
-INSERT INTO user (id, city, created, enabled, name, password) VALUES (53, 'bcn', CURRENT_TIMESTAMP, true, 'david','$2a$10$vw31ff.u4.BScboXRixv0eewf9eabDLh4lWS2YlMUoNS/hr/8fB/O');
+INSERT INTO app_user (id, city, created, enabled, name, password) VALUES (53, 'bcn', CURRENT_TIMESTAMP, true, 'david','$2a$10$vw31ff.u4.BScboXRixv0eewf9eabDLh4lWS2YlMUoNS/hr/8fB/O');
 INSERT INTO user_role (users_id, roles_id) VALUES (53, 50);
