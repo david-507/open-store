@@ -34,21 +34,25 @@ public class MainApplication extends SpringBootServletInitializer {
 
         return args -> {
 
-            // Rescatamos todos los productos
-            List<Producto> productos = productRepository.findAll();
+            try {
+                // Rescatamos todos los productos
+                List<Producto> productos = productRepository.findAll();
 
-            Random r = new Random();
+                Random r = new Random();
 
-            // Para cada uno de ellos
-            for (Producto p : productos) {
-                // Vamos a añadirle un número aleatorio de puntuaciones, entre 1 y 10
-                for (int i = 0; i < r.nextInt(10); i++)
-                    // Lo valoramos con una puntuación aleatoria, entre 3 y 5.
-                    p.addPuntuacion(new Puntuacion(3 + r.nextInt(2)));
+                // Para cada uno de ellos
+                for (Producto p : productos) {
+                    // Vamos a añadirle un número aleatorio de puntuaciones, entre 1 y 10
+                    for (int i = 0; i < r.nextInt(10); i++)
+                        // Lo valoramos con una puntuación aleatoria, entre 3 y 5.
+                        p.addPuntuacion(new Puntuacion(3 + r.nextInt(2)));
+                }
+
+                // Actualizamos los productos, almacenando así su puntuación
+                productRepository.saveAll(productos);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
-
-            // Actualizamos los productos, almacenando así su puntuación
-            productRepository.saveAll(productos);
 
         };
 

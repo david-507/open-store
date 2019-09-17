@@ -33,5 +33,5 @@ build/
 .env
 .mvn/
 
-
+/config/*
 .env
