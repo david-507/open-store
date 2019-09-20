@@ -37,4 +37,9 @@ public class HomeController {
         model.addAttribute("message", "welcome to spring booy");
         return "index";
     }
+
+    @GetMapping("/test")
+    public String hello(Model model) {
+        return "test";
+    }
 }

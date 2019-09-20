@@ -20,7 +20,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
     private String name;
 
     @Column(unique = true)
@@ -34,6 +33,9 @@ public class User {
 
     @ManyToMany
     private List<Role> roles = new ArrayList<>();
+
+    @Embedded
+    UserDetails userDetails;
 
     @CreationTimestamp
     private Timestamp created;
@@ -103,6 +105,14 @@ public class User {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 
     public void setRoles(List<Role> roles) {

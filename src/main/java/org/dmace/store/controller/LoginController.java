@@ -1,21 +1,24 @@
 package org.dmace.store.controller;
 
 import org.dmace.store.model.User;
+import org.dmace.store.model.bean.GoogleIdToken;
 import org.dmace.store.model.bean.LoginBean;
 import org.dmace.store.repository.UserRepository;
 import org.dmace.store.service.UserService;
+import org.dmace.store.service.login.GoogleLoginService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,11 +41,26 @@ public class LoginController {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    GoogleLoginService googleLoginService;
+
     @GetMapping("/google-login")
     public String googlelogin(Model model) {
         model.addAttribute("userLogin", new LoginBean());
         return "google-login";
     }
+
+    @PostMapping("/glogin")
+    public String googlelogin(@NotNull @RequestParam("id-token") String idToken){
+        User user = googleLoginService.VerifyAndStore(idToken);
+        if( user!=null ) {
+            session.setAttribute("user", user);
+            return "redirect:/";
+        }
+
+        return "main-login";
+    }
+
 
     @GetMapping("/login")
     public String login(Model model) {
