@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -44,17 +45,13 @@ public class LoginController {
     @Autowired
     GoogleLoginService googleLoginService;
 
-    @GetMapping("/google-login")
-    public String googlelogin(Model model) {
-        model.addAttribute("userLogin", new LoginBean());
-        return "google-login";
-    }
-
     @PostMapping("/glogin")
-    public String googlelogin(@NotNull @RequestParam("id-token") String idToken){
+    public String googlelogin(@NotNull @RequestParam("id-token") String idToken, HttpServletRequest request, HttpServletResponse response) {
         User user = googleLoginService.VerifyAndStore(idToken);
+
         if( user!=null ) {
             session.setAttribute("user", user);
+            googleLoginService.addLoginCookie(request, response, idToken);
             return "redirect:/";
         }
 

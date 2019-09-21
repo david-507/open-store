@@ -18,5 +18,12 @@ public interface ProductRepository extends JpaRepository<Producto, Long> {
 
     List<Producto> findAllByIdIsIn(List<Long> ids);
 
+    /** Returns all products from a featured category */
+    @Query("select p from Producto p left join Categoria c on p.categoria = c where c.destacada = true")
+    List<Producto> findFeaturedProducts();
+
+    @Query("select p from Producto p where p.descuento > 0")
+    List<Producto> findOnSaleProducts();
+
     void removeAllByIdIn(List<Long> ids);
 }

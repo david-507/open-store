@@ -3,41 +3,15 @@
 
 <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm" th:fragment="header">
     <h5 class="my-0 mr-md-auto font-weight-normal"><a th:href="@{/}">Java Open store</a></h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Destacados</a>
-        <a class="p-2 text-dark" href="#">Ofertas</a>
+<!--/*    */-->
+    <nav class="nav">
+        <a class="nav-link active" th:href="@{/products/featured}">Destacados</a>
+        <a class="nav-link" th:href="@{/products/on-sale}">Ofertas</a>
+        <a class="nav-link disabled" href="#">Otros</a>
     </nav>
-
-    <!--/*<div class="dropdown" id="cat-button">
-        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownCategories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            categorias
-        </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCategories" >
-            <a class="dropdown-item" th:each="cat :${categories}" th:href="@{/(cid=${cat.id})}"  th:text="${cat.nombre}">Categoria 1</a>
-        </div>
-    </div>*/-->
-
-    <th:block th:switch="${session.user}">
-        <a th:case="${null}" class="btn btn-outline-primary" th:href="@{/login}">Login</a>
-        <div th:case="*"class="btn-group dropdown dropdown-menu-right" role="group">
-            <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span th:text="${session.user.name}">Toggle Dropleft</span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownUser">
-                <a class="dropdown-item" href="#" th:href="@{/admin/categories}">Gestionar Categorías</a>
-                <a class="dropdown-item" href="#" th:href="@{/admin/products}">Gestionar Productos</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" th:href="@{/logout}">Cerrar Sessión</a>
-            </div>
-        </div>
-        </div>
+    <th:block th:insert="${session.user != null} ? ~{fragments/header/header-dropdown :: dropdown} : _">
+        <a class="btn btn-outline-primary" th:href="@{/login}">Login</a>
     </th:block>
 </header>
-
-
-<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownProducts" th:fragment="admin-links">
-    <a class="dropdown-item" href="admin/list/categories" th:href="@{/admin/categories}">Categorías</a>
-    <a class="dropdown-item" href="admin/list/products" th:href="@{/admin/products}">Productos</a>
-</div>
 
 </html>

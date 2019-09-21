@@ -87,6 +87,22 @@
             <scope>provided</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-web</artifactId>-->
+<!--            <version>5.1.6.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-config</artifactId>-->
+<!--            <version>5.1.6.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.thymeleaf.extras</groupId>-->
+<!--            <artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
+<!--            <version>3.0.4.RELEASE</version>-->
+<!--        </dependency>-->
+
         <!-- hot swapping, disable cache for template, enable live reload -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

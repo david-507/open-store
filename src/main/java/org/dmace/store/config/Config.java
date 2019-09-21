@@ -40,12 +40,21 @@ public class Config implements WebMvcConfigurer, ApplicationContextAware {
     }
 
     @Bean
+    @Description("Spring Message Resolver")
+    public ResourceBundleMessageSource messageSource() {
+        System.out.println("--------------- MESSAGE SOURCE");
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
+    }
+
+    @Bean
     @Description("Thymeleaf Template Engine")
-    public SpringTemplateEngine templateEngine(SpringResourceTemplateResolver templateResolver) {
+    public SpringTemplateEngine templateEngine(SpringResourceTemplateResolver templateResolver, ResourceBundleMessageSource messageSource) {
         System.out.println("--------------- TEMPLATE ENGINE");
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
-        templateEngine.setTemplateEngineMessageSource(messageSource());
+        templateEngine.setTemplateEngineMessageSource(messageSource);
         return templateEngine;
     }
 
@@ -61,14 +70,7 @@ public class Config implements WebMvcConfigurer, ApplicationContextAware {
         return viewResolver;
     }
 
-    @Bean
-    @Description("Spring Message Resolver")
-    public ResourceBundleMessageSource messageSource() {
-        System.out.println("--------------- MESSAGE SOURCE");
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
-        return messageSource;
-    }
+
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         System.out.println("--------------- adding resource handlers");

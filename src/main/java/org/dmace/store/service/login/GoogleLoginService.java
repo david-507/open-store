@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.sql.Timestamp;
@@ -29,9 +32,25 @@ public class GoogleLoginService {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String CLIENT_ID = System.getenv("GOOGLE_CLIENT_ID");
 
-
     @Autowired
     private UserRepository userRepository;
+
+    private static final String GOOGLE_ID_TOKEN_COOKIE = "gid-token";
+
+    public void addLoginCookie(HttpServletRequest request, HttpServletResponse response, String idToken) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie c: cookies) {
+            if (GOOGLE_ID_TOKEN_COOKIE.equals(c.getName())) {
+                /// we found an id cookie. Check if its the same id-token
+                if(c.getValue().equals(idToken)) // cookie was already set. Do nothing
+                    return;
+            }
+        }
+        // if not found, create a new Cookie
+        Cookie googleCookie = new Cookie(GOOGLE_ID_TOKEN_COOKIE, idToken);
+        googleCookie.setHttpOnly(true);
+        response.addCookie(googleCookie);
+    }
 
     /**
      * Verifies the given google idToken

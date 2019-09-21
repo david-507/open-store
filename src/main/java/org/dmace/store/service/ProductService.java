@@ -31,6 +31,18 @@ public class ProductService {
         return repository.findAll();
     }
 
+    /**
+     * Returns products which are from a highlighted Category
+     *
+     */
+    public List<Producto> findFeaturedProducts() {
+        return repository.findFeaturedProducts();
+    }
+
+    public List<Producto>  findOnSaleProducts() {
+        return repository.findOnSaleProducts();
+    }
+
     public Producto save(Producto product) {
         return repository.save(product);
     }
@@ -39,4 +51,6 @@ public class ProductService {
     public void removeAll(List<Long> ids) {
         repository.removeAllByIdIn(ids);
     }
+
+
 }

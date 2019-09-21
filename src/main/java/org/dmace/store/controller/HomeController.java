@@ -27,19 +27,13 @@ public class HomeController {
     @GetMapping("/")
     public String welcome(@RequestParam(name="cid", required=false) Long cid, Model model) {
         model.addAttribute("categories", categoryService.findAll());
-        List<Producto> productos;
 
         if(cid==null)
             model.addAttribute("products", productservice.getRandomProducts(RANDOM_PRODUCTS_TO_SHOW));
         else
             model.addAttribute("products", productservice.findAllByCategory(cid));
 
-        model.addAttribute("message", "welcome to spring booy");
         return "index";
     }
 
-    @GetMapping("/test")
-    public String hello(Model model) {
-        return "test";
-    }
 }
